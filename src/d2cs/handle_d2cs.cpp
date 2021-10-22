@@ -22,6 +22,7 @@
 
 #include <cstring>
 #include <ctime>
+#include <regex>
 
 #include "compat/mkdir.h"
 #include "compat/pdir.h"
@@ -37,6 +38,7 @@
 #include "d2ladder.h"
 #include "d2charfile.h"
 #include "d2charlist.h"
+#include "d2gs.h"
 
 #ifdef HAVE_ARPA_INET_H
 # include <arpa/inet.h>
@@ -226,11 +228,14 @@ static int on_client_creategamereq(t_connection * c, t_packet * packet)
 	char const	* gamedesc;
 	t_game		* game;
 	t_d2gs		* gs;
+	t_d2gs		* manual_gs;
 	t_gq		* gq;
 	unsigned int	tempflag,gameflag;
 	unsigned int	leveldiff, maxchar, difficulty, expansion, hardcore, ladder;
 	unsigned int	seqno, reply;
 	unsigned int	pos;
+  unsigned int  game_to_find;
+  char * str_game_to_find;
 	t_elem		* elem;
 
 	pos=sizeof(t_client_d2cs_creategamereq);
@@ -288,6 +293,16 @@ static int on_client_creategamereq(t_connection * c, t_packet * packet)
 	} else if (!(game=d2cs_game_create(gamename,gamepass,gamedesc,gameflag))) {
 		reply=D2CS_CLIENT_CREATEGAMEREPLY_NAME_EXIST;
 	} else {
+    if(std::regex_match(gamedesc, std::regex("gs \\d"))) {
+      str_game_to_find = std::strtok((char *)gamedesc, " ");
+      str_game_to_find = std::strtok(NULL, " ");
+      game_to_find = (unsigned int)std::atoi(str_game_to_find);
+      manual_gs = d2gslist_find_gs(game_to_find);
+      if (manual_gs != NULL) {
+        gs = manual_gs;
+        eventlog(eventlog_level_info,__FUNCTION__,"Manual set GS to {}", game_to_find);
+      }
+    }
 		reply=D2CS_CLIENT_CREATEGAMEREPLY_SUCCEED;
 		game_set_d2gs(game,gs);
 		d2gs_add_gamenum(gs, 1);
