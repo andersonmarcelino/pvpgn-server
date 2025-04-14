@@ -236,6 +236,7 @@ static int on_client_creategamereq(t_connection * c, t_packet * packet)
 	unsigned int	pos;
   unsigned int  game_to_find;
 	t_elem		* elem;
+  char * str_game_to_find;
 
 	pos=sizeof(t_client_d2cs_creategamereq);
 	if (!(gamename=packet_get_str_const(packet,pos,MAX_GAMENAME_LEN))) {
@@ -293,9 +294,17 @@ static int on_client_creategamereq(t_connection * c, t_packet * packet)
 		reply=D2CS_CLIENT_CREATEGAMEREPLY_NAME_EXIST;
 	} else {
     if(std::regex_match(gamedesc, std::regex(std::strcat(std::strcat("^", prefs_get_d2gs_manual_prefix()), "\\d$")))) {
-      game_to_find = (unsigned int)std::atoi((char *)gamedesc);
+      str_game_to_find = ((char *)gamedesc + std::strlen(prefs_get_d2gs_manual_prefix()));
+      game_to_find = (unsigned int)std::atoi(str_game_to_find);
       manual_gs = d2gslist_find_gs(game_to_find);
-      if (manual_gs != NULL) {
+      if (
+          manual_gs != NULL &&
+          manual_gs->active &&
+          manual_gs->connection &&
+          manual_gs->state == d2gs_state_authed &&
+          manual_gs->maxgame &&
+          manual_gs->gamenum < manual_gs->maxgame
+      ) {
         gs = manual_gs;
         eventlog(eventlog_level_info,__FUNCTION__,"Manual set GS to {}", game_to_find);
       }
