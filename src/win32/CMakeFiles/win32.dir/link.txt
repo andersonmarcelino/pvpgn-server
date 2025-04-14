@@ -1,0 +1,2 @@
+/usr/bin/ar qc libwin32.a CMakeFiles/win32.dir/service.cpp.o CMakeFiles/win32.dir/console_output.cpp.o CMakeFiles/win32.dir/windump.cpp.o
+/usr/bin/ranlib libwin32.a

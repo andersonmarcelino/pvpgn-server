@@ -89,6 +89,7 @@ namespace pvpgn
 		extern char const * prefs_get_charlist_sort_order(void);
 		extern unsigned int prefs_get_max_connections(void);
 		extern char const * prefs_get_pidfile(void);
+		extern char const * prefs_get_d2gs_manual_prefix(void);
 
 	}
 

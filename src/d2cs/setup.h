@@ -84,6 +84,7 @@ for (curr_entry_ = hashtable_get_first_matching(hashtable, hash); \
 #define DEFAULT_TIMEOUT_CHECKINTERVAL	60
 #define DEFAULT_ACC_ALLOWED_SYMBOLS     "-_[]"
 #define DEFAULT_D2GS_RESTART_DELAY	300
+#define DEFAULT_D2GS_MANUAL_PREFIX	"gs_"
 
 #define MAJOR_VERSION_EQUAL(v1,v2,mask)         (((v1) & (mask)) == ((v2) & (mask)))
 

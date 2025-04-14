@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++11 -O3 -march=native -mtune=native -pedantic -Wno-variadic-macros -rdynamic CMakeFiles/bnpass.dir/bnpass.cpp.o -o bnpass   -L/var/app/src/common  -L/var/app/src/compat  -L/var/app/src/win32  -Wl,-rpath,/var/app/src/common:/var/app/src/compat:/var/app/src/win32: ../common/libcommon.a ../compat/libcompat.a 

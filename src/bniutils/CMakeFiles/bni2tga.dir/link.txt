@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++11 -O3 -march=native -mtune=native -pedantic -Wno-variadic-macros -rdynamic CMakeFiles/bni2tga.dir/bni2tga.cpp.o CMakeFiles/bni2tga.dir/fileio.cpp.o -o bni2tga   -L/var/app/src/common  -L/var/app/src/compat  -L/var/app/src/win32  -Wl,-rpath,/var/app/src/common:/var/app/src/compat:/var/app/src/win32: ../common/libcommon.a 
