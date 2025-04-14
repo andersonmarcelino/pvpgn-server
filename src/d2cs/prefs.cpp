@@ -89,7 +89,6 @@ static struct
         unsigned int    d2gs_restart_delay;
         std::time_t          ladder_start_time;
         unsigned int    char_expire_day;
-        char const      * d2gs_manual_prefix;
         char const      * charlist_sort;
         char const      * charlist_sort_order;
         unsigned int    max_connections;
@@ -245,9 +244,6 @@ static int conf_setdef_d2gs_restart_delay(void);
 static int conf_set_char_expire_day(const char* valstr);
 static int conf_setdef_char_expire_day(void);
 
-static int conf_set_d2gs_manual_prefix(const char* valstr);
-static int conf_setdef_d2gs_manual_prefix(void);
-
 static int conf_set_d2gsconffile(const char* valstr);
 static int conf_setdef_d2gsconffile(void);
 
@@ -317,7 +313,6 @@ static t_conf_entry prefs_conf_table[]={
     { "account_allowed_symbols",conf_set_account_allowed_symbols,NULL,    conf_setdef_account_allowed_symbols},
     { "d2gs_restart_delay",	conf_set_d2gs_restart_delay,     NULL,    conf_setdef_d2gs_restart_delay},
     { "char_expire_day",	conf_set_char_expire_day,        NULL,    conf_setdef_char_expire_day},
-    { "d2gs_manual_prefix",	conf_set_d2gs_manual_prefix,        NULL,    conf_setdef_d2gs_manual_prefix},
     { "d2gsconffile",           conf_set_d2gsconffile,           NULL,    conf_setdef_d2gsconffile},
     { "charlist_sort",          conf_set_charlist_sort,          NULL,    conf_setdef_charlist_sort},
     { "charlist_sort_order",    conf_set_charlist_sort_order,    NULL,    conf_setdef_charlist_sort_order},
@@ -1185,20 +1180,6 @@ static int conf_setdef_char_expire_day(void)
 	return conf_set_int(&prefs_conf.char_expire_day,NULL,0);
 }
 
-extern char const * prefs_get_d2gs_manual_prefix(void)
-{
-	return prefs_conf.d2gs_manual_prefix;
-}
-
-static int conf_set_d2gs_manual_prefix(const char* valstr)
-{
-	return conf_set_str(&prefs_conf.d2gs_manual_prefix,valstr,NULL);
-}
-
-static int conf_setdef_d2gs_manual_prefix(void)
-{
-	return conf_set_str(&prefs_conf.d2gs_manual_prefix,NULL,DEFAULT_D2GS_MANUAL_PREFIX);
-}
 
 extern char const * prefs_get_d2gsconffile(void)
 {

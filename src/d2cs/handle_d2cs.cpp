@@ -293,9 +293,8 @@ static int on_client_creategamereq(t_connection * c, t_packet * packet)
 	} else if (!(game=d2cs_game_create(gamename,gamepass,gamedesc,gameflag))) {
 		reply=D2CS_CLIENT_CREATEGAMEREPLY_NAME_EXIST;
 	} else {
-    if(std::regex_match(gamedesc, std::regex(std::strcat(std::strcat("^", prefs_get_d2gs_manual_prefix()), "\\d$")))) {
-      str_game_to_find = ((char *)gamedesc + std::strlen(prefs_get_d2gs_manual_prefix()));
-      game_to_find = (unsigned int)std::atoi(str_game_to_find);
+    if(std::regex_match(gamedesc, std::regex("^\\d$"))) {
+      game_to_find = (unsigned int)std::atoi((char *)gamedesc);
       manual_gs = d2gslist_find_gs(game_to_find);
       if (
           manual_gs != NULL &&
